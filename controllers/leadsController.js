@@ -1,4 +1,5 @@
 const Lead = require('../models/Lead');
+const { sendLeadEmail } = require('../services/emailService');
 
 exports.captureLead = async (req, res) => {
     try {
@@ -12,13 +13,16 @@ exports.captureLead = async (req, res) => {
         const lead = new Lead({ name, email, phone, website, product, message });
         await lead.save();
 
+        // ✅ Send email after saving lead
+        await sendLeadEmail({ name, email, phone, website, product, message });
+
         // Emit real-time data if socket.io is available
         const io = req.app.get('socketio');
         if (io) {
             io.emit('newLead', lead);
         }
 
-        res.status(201).json({ success: true, message: 'Lead captured successfully!', lead });
+        res.status(201).json({ success: true, message: 'Lead captured successfully and email sent!', lead });
     } catch (err) {
         console.error('Error capturing lead:', err);
         res.status(500).json({ success: false, message: 'Failed to capture lead', error: err.message });

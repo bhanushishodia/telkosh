@@ -3,8 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const http = require('http');
-const { Server } = require('socket.io');
 
+const { Server } = require('socket.io');
+const { sendLeadEmail } = require('./services/emailService');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -39,15 +40,19 @@ const LeadSchema = new mongoose.Schema({
 const Lead = mongoose.model('Lead', LeadSchema);
 
 // API to Submit Lead
+// Existing POST /api/leads
 app.post('/api/leads', async (req, res) => {
     try {
         const newLead = new Lead(req.body);
         await newLead.save();
 
-        // Emit new lead to frontend
+        // Emit to frontend
         io.emit('newLead', newLead);
 
-        res.json({ message: 'Lead submitted successfully', lead: newLead });
+        // Send email to harpreet@mobishastra.com
+        await sendLeadEmail(newLead);
+
+        res.json({ message: 'Lead submitted and email sent successfully', lead: newLead });
     } catch (error) {
         console.error('❌ Error saving lead:', error.message);
         res.status(500).json({ error: 'Server error' });
@@ -115,4 +120,4 @@ io.on('connection', (socket) => {
 
 // Start Server
 const PORT = process.env.PORT || 10000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));   
