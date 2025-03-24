@@ -1,0 +1,36 @@
+const Lead = require('../models/Lead');
+
+exports.captureLead = async (req, res) => {
+    try {
+        const { name, email, phone, website, product, message } = req.body;
+
+        // Check if required fields are provided
+        if (!name || !email || !phone || !message) {
+            return res.status(400).json({ success: false, message: 'Name, Email, Phone, and Message are required' });
+        }
+
+        const lead = new Lead({ name, email, phone, website, product, message });
+        await lead.save();
+
+        // Emit real-time data if socket.io is available
+        const io = req.app.get('socketio');
+        if (io) {
+            io.emit('newLead', lead);
+        }
+
+        res.status(201).json({ success: true, message: 'Lead captured successfully!', lead });
+    } catch (err) {
+        console.error('Error capturing lead:', err);
+        res.status(500).json({ success: false, message: 'Failed to capture lead', error: err.message });
+    }
+};
+
+exports.getLeads = async (req, res) => {
+    try {
+        const leads = await Lead.find().sort({ createdAt: -1 });
+        res.status(200).json(leads);
+    } catch (err) {
+        console.error('Error fetching leads:', err);
+        res.status(500).json({ success: false, message: 'Failed to fetch leads', error: err.message });
+    }
+};
