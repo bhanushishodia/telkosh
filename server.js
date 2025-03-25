@@ -16,11 +16,12 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB Connected'))
-.catch(err => console.error('❌ MongoDB Connection Error:', err));
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('✅ MongoDB Connected Successfully'))
+    .catch(err => {
+        console.error('❌ MongoDB Connection Error:', err.message);
+        process.exit(1); // Stop server if DB fails to connect
+    });
 
 // Lead Schema
 const LeadSchema = new mongoose.Schema({
@@ -48,6 +49,7 @@ app.post('/api/leads', async (req, res) => {
 
         res.json({ message: 'Lead submitted successfully', lead: newLead });
     } catch (error) {
+        console.error('❌ Error saving lead:', error.message);
         res.status(500).json({ error: 'Server error' });
     }
 });
@@ -58,6 +60,7 @@ app.get('/api/leads', async (req, res) => {
         const leads = await Lead.find().sort({ createdAt: -1 });
         res.json(leads);
     } catch (error) {
+        console.error('❌ Error fetching leads:', error.message);
         res.status(500).json({ error: 'Server error' });
     }
 });
