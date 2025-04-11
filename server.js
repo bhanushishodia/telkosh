@@ -92,7 +92,7 @@ app.get('/api/leads/contact', async (req, res) => {
 // API to Fetch landing Page Leads
 app.get('/api/leads/landing', async (req, res) => {
     try {
-        const contactLeads = await Lead.find({ page: 'landingpagekenya' }).sort({ createdAt: -1 });
+        const contactLeads = await Lead.find({ page: 'landingpage' }).sort({ createdAt: -1 });
         res.json(contactLeads);
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
