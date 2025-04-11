@@ -46,12 +46,12 @@ const sendLeadEmail = async (leadData) => {
   };
 
   try {
-    console.log('📧 Sending email with lead data...');
+    console.log("📧 Sending email with data:", leadData);
     const info = await transporter.sendMail(mailOptions);
-    console.log('✅ Email sent successfully!');
-    console.log('📬 Message ID:', info.messageId);
+    console.log("✅ Email sent successfully");
+    console.log("📬 Message ID:", info.messageId);
   } catch (err) {
-    console.error('❌ Email sending failed:', err.message);
+    console.error("❌ Email sending failed:", err.message);
   }
 };
 
