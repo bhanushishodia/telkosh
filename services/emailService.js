@@ -18,7 +18,7 @@ const sendLeadEmail = async (leadData) => {
 
   const mailOptions = {
     from: `"Lead Notification" <${process.env.SMTP_USER}>`,
-    to: 'receiver-email@example.com', // 🟢 Hardcoded receiver email here
+    to: 'b.bhanushishodia123@gmail.com', // 🟢 Hardcoded receiver email here
     subject: `New Lead from ${page || 'Website'}`,
     html: `
       <h3>New Lead Received</h3>
