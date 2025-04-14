@@ -17,8 +17,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS
   }
 });
-
-
 // Optional: Verify connection when server starts
 transporter.verify((error, success) => {
   if (error) {
@@ -34,7 +32,7 @@ const sendLeadEmail = async (leadData) => {
 
   const mailOptions = {
     from: `"Lead Notification" <${process.env.SMTP_USER}>`,
-    to: 'b.bhanushishodia123@gmail.com',
+    to: 'harpreet@mobishastra.com',
     subject: `New Lead from ${page || 'Website'}`,
     html: `
       <h3>New Lead Received</h3>
