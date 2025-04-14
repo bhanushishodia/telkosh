@@ -9,12 +9,15 @@ console.log('📡 SMTP_SERVICE:', process.env.SMTP_SERVICE);
 
 // Create transporter using env values
 const transporter = nodemailer.createTransport({
-  service: process.env.SMTP_SERVICE || 'gmail',
+  host: "smtp.office365.com",
+  port: 587,
+  secure: false, // Use TLS
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
   }
 });
+
 
 // Optional: Verify connection when server starts
 transporter.verify((error, success) => {
