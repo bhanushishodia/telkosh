@@ -6,7 +6,6 @@ require('dotenv').config(); // Load env variables
 console.log('📦 Loading email service...');
 console.log('🔐 SMTP_USER:', process.env.SMTP_USER);
 console.log('📡 SMTP_SERVICE:', process.env.SMTP_SERVICE);
-
 // Create transporter using env values
 const transporter = nodemailer.createTransport({
   host: "smtp.office365.com",
@@ -30,9 +29,14 @@ transporter.verify((error, success) => {
 const sendLeadEmail = async (leadData) => {
   const { name, email, phone, website, product, message, page } = leadData;
 
+  // Check if the lead is from Malaysia Landing Page
+  const recipientEmail = page === "landingpage-malaysia" ? "prasun@telkosh.com" : "harpreet@mobishastra.com";
+
+
   const mailOptions = {
     from: `"Lead Notification" <${process.env.SMTP_USER}>`,
-    to: 'harpreet@mobishastra.com',
+    // to: 'harpreet@mobishastra.com',
+    to: recipientEmail,
     subject: `New Lead from ${page || 'Website'}`,
     html: `
       <h3>New Lead Received</h3>
@@ -47,7 +51,7 @@ const sendLeadEmail = async (leadData) => {
   };
 
   try {
-    console.log("📧 Sending email with data:", leadData);
+    console.log(`📧 Sending email to: ${recipientEmail} with data:`, leadData);
     const info = await transporter.sendMail(mailOptions);
     console.log("✅ Email sent successfully");
     console.log("📬 Message ID:", info.messageId);

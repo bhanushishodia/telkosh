@@ -107,6 +107,16 @@ app.get('/api/leads/country', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+// Optional: Add a new route to get Malaysia landing page leads
+app.get('/api/leads/landing-malaysia', async (req, res) => {
+    try {
+        const malaysiaLeads = await Lead.find({ page: 'landingpage-malaysia' }).sort({ createdAt: -1 });
+        res.json(malaysiaLeads);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 // Default Route
 app.get("/", (req, res) => {
     res.send("Server is running successfully!");
