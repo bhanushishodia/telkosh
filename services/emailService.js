@@ -30,7 +30,8 @@ const sendLeadEmail = async (leadData) => {
   const { name, email, phone, website, product, message, page } = leadData;
 
   // Check if the lead is from Malaysia Landing Page
-  const recipientEmail = page === "landingpage-malaysia" ? "prasun@telkosh.com" : "harpreet@mobishastra.com";
+  // const recipientEmail = page === "landingpage-malaysia" ? "prasun@telkosh.com" : "harpreet@mobishastra.com";
+  const recipientEmail = "poonam@telkosh.com";  // Set this email for all leads
   console.log('Lead Page:', page);
 
   const mailOptions = {
