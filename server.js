@@ -9,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+// ✅ UptimeRobot Ping Route
+app.get("/api/ping", (req, res) => {
+    res.send("pong");
+});
 // API to Submit Lead (Only send email)
 app.post('/api/leads', async (req, res) => {
     try {
