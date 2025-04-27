@@ -60,5 +60,44 @@ const sendLeadEmail = async (leadData) => {
     console.error("❌ Email sending failed:", err.message);
   }
 };
+const sendWelcomeEmail = async (leadData) => {
+  const { name, email } = leadData;
 
-module.exports = { sendLeadEmail };
+  const mailOptions = {
+    from: `"Telkosh Team" <${process.env.SMTP_USER}>`, // Same SMTP user
+    to: email, // Lead ka apna email
+    subject: "Quick Acknowledgment - Telkosh Bulk SMS 🚀", // Subject line
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h2>Hi ${name || 'there'},</h2>
+        <p>We’re excited to hear from you! 🙌</p>
+        <p>Your interest in <strong>Telkosh Bulk SMS</strong> is the first step to smarter, faster business messaging.</p>
+        <p>We’ll get back to you shortly.</p>
+        <p><strong>Need urgent help?</strong> Call us anytime at <a href="tel:+911234567890">+91-1234567890</a>.</p>
+        <br/>
+        <p>You're in good hands.</p>
+        <ul style="list-style: none; padding-left: 0;">
+          <li>🔒 Secure</li>
+          <li>🌍 Global Reach</li>
+          <li>💼 Trusted by Enterprises</li>
+        </ul>
+        <br/>
+        <p>Warm Regards,<br/><strong>Telkosh Team</strong></p>
+      </div>
+    `
+  };
+
+  try {
+    console.log(`📧 Sending welcome email to: ${email}`);
+    const info = await transporter.sendMail(mailOptions);
+    console.log("✅ Welcome email sent successfully");
+    console.log("📬 Message ID:", info.messageId);
+  } catch (err) {
+    console.error("❌ Welcome email sending failed:", err.message);
+  }
+};
+
+module.exports = { sendLeadEmail, sendWelcomeEmail };
+
+
+

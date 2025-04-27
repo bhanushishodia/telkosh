@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { sendLeadEmail } = require('./services/emailService');
-
+const { sendLeadEmail, sendWelcomeEmail } = require('./services/emailService');
 const app = express();
 
 // Middleware
@@ -22,7 +21,10 @@ app.post('/api/leads', async (req, res) => {
         // Send email only
         await sendLeadEmail(leadData);
 
-        res.json({ message: '✅ Email sent successfully', lead: leadData });
+           // Send welcome email to the lead
+           await sendWelcomeEmail(leadData);
+
+        res.json({ message: '✅   Both Email sent successfully', lead: leadData });
     } catch (error) {
         console.error('❌ Error sending email:', error.message);
         res.status(500).json({ error: 'Server error while sending email' });
