@@ -2,13 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { sendLeadEmail, sendWelcomeEmail } = require('./services/emailService');
+const { sendWhatsAppMessage } = require('./services/whatsappService'); // Import the function
 const app = express();
-
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-
 // ✅ UptimeRobot Ping Route
 app.get("/api/ping", (req, res) => {
     res.send("pong");
@@ -17,14 +15,20 @@ app.get("/api/ping", (req, res) => {
 app.post('/api/leads', async (req, res) => {
     try {
         const leadData = req.body;
-
+        const { name, phone, email } = leadData;  // Destructure name, phone, and email from leadData
         // Send email only
         await sendLeadEmail(leadData);
+        // Send welcome email to the lead
+        await sendWelcomeEmail(leadData);
+             // Send WhatsApp welcome message
+             const parameters = [
+                { value: name },  // Send the name as a parameter for the WhatsApp message
+                { value: "Welcome to our service!" },  // Example additional parameter
+            ];
+            // Trigger the WhatsApp message
+        await sendWhatsAppMessage(name, phone, 'Welcome_Template', parameters);  // Use the correct template name
 
-           // Send welcome email to the lead
-           await sendWelcomeEmail(leadData);
-
-        res.json({ message: '✅   Both Email sent successfully', lead: leadData });
+        res.json({ message: '✅   Both Email and WhatsApp message sent successfully', lead: leadData });
     } catch (error) {
         console.error('❌ Error sending email:', error.message);
         res.status(500).json({ error: 'Server error while sending email' });
@@ -33,7 +37,7 @@ app.post('/api/leads', async (req, res) => {
 
 // Default Route
 app.get("/", (req, res) => {
-    res.send("🚀 Server is running - Email only mode!");
+    res.send("🚀 Server is running - Email and WhatsApp mode!");
 });
 
 // Start Server

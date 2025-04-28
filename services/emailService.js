@@ -66,6 +66,7 @@ const sendWelcomeEmail = async (leadData) => {
   const mailOptions = {
     from: `"Telkosh Team" <${process.env.SMTP_USER}>`, // Same SMTP user
     to: email, // Lead ka apna email
+    cc: "poonam@telkosh.com", // <-- Yahan apna CC email daalo
     subject: "Quick Acknowledgment - Telkosh Bulk SMS 🚀", // Subject line
     html: `
       <div style="font-family: Arial, sans-serif; color: #333;">
@@ -73,7 +74,7 @@ const sendWelcomeEmail = async (leadData) => {
         <p>We’re excited to hear from you! 🙌</p>
         <p>Your interest in <strong>Telkosh Bulk SMS</strong> is the first step to smarter, faster business messaging.</p>
         <p>We’ll get back to you shortly.</p>
-        <p><strong>Need urgent help?</strong> Call us anytime at <a href="tel:+911234567890">+91-1234567890</a>.</p>
+        <p><strong>Need urgent help?</strong> Call us anytime at <a href="tel:+917850888280">+91-7850888280</a>.</p>
         <br/>
         <p>You're in good hands.</p>
         <ul style="list-style: none; padding-left: 0;">
