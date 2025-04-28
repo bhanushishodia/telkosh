@@ -66,7 +66,7 @@ const sendWelcomeEmail = async (leadData) => {
   const mailOptions = {
     from: `"Telkosh Team" <${process.env.SMTP_USER}>`, // Same SMTP user
     to: email, // Lead ka apna email
-    cc: "poonam@telkosh.com", // <-- Yahan apna CC email daalo
+    bcc: "Santosh@telkosh.com, bhanu@anantya.ai", // <-- Multiple BCC emails
     subject: "Quick Acknowledgment - Telkosh Bulk SMS 🚀", // Subject line
     html: `
       <div style="font-family: Arial, sans-serif; color: #333;">

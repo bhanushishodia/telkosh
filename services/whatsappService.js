@@ -1,6 +1,8 @@
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 
+console.log('📦 Loading whatsapp service...');
+
 const sendWhatsAppMessage = async (recipientName, recipientNumber, templateName = "Default_Template", parameters = []) => {
   const apiUrl = 'https://apiv1.anantya.ai/api/Campaign/SendSingleTemplateMessage?templateId=96'; 
   const apiKey = 'DDD6CBFD-867C-445D-88E1-D63FBC840EEC';
