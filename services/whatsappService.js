@@ -4,8 +4,10 @@ const FormData = require('form-data');
 console.log('📦 Loading whatsapp service...');
 
 const sendWhatsAppMessage = async (recipientName, recipientNumber, templateName = "Default_Template", parameters = []) => {
-  const apiUrl = 'https://apiv1.anantya.ai/api/Campaign/SendSingleTemplateMessage?templateId=96'; 
-  const apiKey = 'DDD6CBFD-867C-445D-88E1-D63FBC840EEC';
+  // const apiUrl = 'https://apiv1.anantya.ai/api/Campaign/SendSingleTemplateMessage?templateId=96'; 
+  const apiUrl = 'https://apiv1.anantya.ai/api/Campaign/SendSingleTemplateMessage?templateId=4'; 
+  // const apiKey = 'DDD6CBFD-867C-445D-88E1-D63FBC840EEC';
+  const apiKey = '4051519F-5C48-4C17-A4CB-24A10A4FC0FD';
 
   console.log('Step 1: Preparing to send WhatsApp message.');
   console.log('Recipient Number:', recipientNumber);
@@ -54,7 +56,4 @@ const sendWhatsAppMessage = async (recipientName, recipientNumber, templateName 
     throw error;
   }
 };
-
-
-
 module.exports = { sendWhatsAppMessage };
