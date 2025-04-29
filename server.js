@@ -20,12 +20,13 @@ app.post('/api/leads', async (req, res) => {
         await sendLeadEmail(leadData);
         // Send welcome email to the lead
         await sendWelcomeEmail(leadData);
-             // Send WhatsApp welcome message
-             const parameters = [
-                { value: name },  // Send the name as a parameter for the WhatsApp message
-                { value: "Welcome to our service!" },  // Example additional parameter
-            ];
-            // Trigger the WhatsApp message
+        // Send WhatsApp welcome message
+        // Corrected parameter array for template with only one placeholder
+        const parameters = [
+            { value: name }
+        ];
+
+        // Trigger the WhatsApp message
         await sendWhatsAppMessage(name, phone, 'welcome1', parameters);  // Use the correct template name
 
         res.json({ message: '✅   Both Email and WhatsApp message sent successfully', lead: leadData });
