@@ -26,7 +26,7 @@ app.post('/api/leads', async (req, res) => {
                 { value: "Welcome to our service!" },  // Example additional parameter
             ];
             // Trigger the WhatsApp message
-        await sendWhatsAppMessage(name, phone, 'Welcome_Template', parameters);  // Use the correct template name
+        await sendWhatsAppMessage(name, phone, 'welcome1', parameters);  // Use the correct template name
 
         res.json({ message: '✅   Both Email and WhatsApp message sent successfully', lead: leadData });
     } catch (error) {

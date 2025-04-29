@@ -49,6 +49,8 @@ const sendWhatsAppMessage = async (recipientName, recipientNumber, templateName 
     }
 
     console.log('Step 5: Message sent successfully:', data);
+    console.log("Full API response: ", JSON.stringify(response.data, null, 2));
+
     return data;
   } catch (error) {
     console.error('Step 6: Error occurred in sendWhatsAppMessage function.');
