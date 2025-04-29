@@ -27,8 +27,7 @@ transporter.verify((error, success) => {
 
 // Send email function
 const sendLeadEmail = async (leadData) => {
-  const { name, email, phone, website, product, message, page } = leadData;
-
+  const { name, email, phone, companyName, product, message, page } = leadData;
   // Check if the lead is from Malaysia Landing Page
   // const recipientEmail = page === "landingpage-malaysia" ? "prasun@telkosh.com" : "harpreet@mobishastra.com";
   const recipientEmail = "poonam@telkosh.com";  // Set this email for all leads
@@ -44,7 +43,7 @@ const sendLeadEmail = async (leadData) => {
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Website:</strong> ${website || 'N/A'}</p>
+       <p><strong>Company Name:</strong> ${companyName || 'N/A'}</p> <!-- Add company name here -->
       <p><strong>Product Interest:</strong> ${product || 'N/A'}</p>
       <p><strong>Message:</strong> ${message}</p>
       <p><strong>Source Page:</strong> ${page}</p>
