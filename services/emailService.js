@@ -74,7 +74,7 @@ const sendWelcomeEmail = async (leadData) => {
         <p>We’re excited to hear from you! 🙌</p>
         <p>Your interest in <strong>Telkosh Bulk SMS</strong> is the first step to smarter, faster business messaging.</p>
         <p>We’ll get back to you shortly.</p>
-         <p><strong>Need urgent help?</strong> Connect us anytime on <a href="https://wa.me/9191729797408" target="_blank">+91-91729797408</a>.</p>
+         <p><strong>Need urgent help?</strong> Connect us anytime on <a href="https://wa.me/917297997408" target="_blank">+91-7297997408</a>.</p>
 
         <br/>
         <p>You're in good hands.</p>
