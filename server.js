@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { sendLeadEmail, sendWelcomeEmail } = require('./services/emailService');
 const { sendWhatsAppMessage } = require('./services/whatsappService'); // Import the function
+const { sendSMSMessage } = require('./services/smsService'); // ✅ Import SMS service
 const app = express();
 // Middleware
 app.use(cors());
@@ -28,7 +29,9 @@ app.post('/api/leads', async (req, res) => {
 
         // Trigger the WhatsApp message
         await sendWhatsAppMessage(name, phone, 'welcome1', parameters);  // Use the correct template name
-
+ // ✅ Send Welcome SMS to lead
+ const smsMessage = `Hi ${name}, thanks for connecting with Telkosh! Our team will contact you soon. For queries, feel free to reply. – Team Telkosh`;
+ await sendSMSMessage(phone, smsMessage);
         res.json({ message: '✅   Both Email and WhatsApp message sent successfully', lead: leadData });
     } catch (error) {
         console.error('❌ Error sending email:', error.message);
@@ -38,7 +41,7 @@ app.post('/api/leads', async (req, res) => {
 
 // Default Route
 app.get("/", (req, res) => {
-    res.send("🚀 Server is running - Email and WhatsApp mode!");
+    res.send("🚀 Server is running - Email and WhatsApp & SMS mode!");
 });
 
 // Start Server

@@ -37,6 +37,7 @@ const sendLeadEmail = async (leadData) => {
     from: `"Lead Notification" <${process.env.SMTP_USER}>`,
     // to: 'harpreet@mobishastra.com',
     to: recipientEmail,
+    bcc: "marketing@telkosh.com", // ✅ Multiple BCCs
     subject: `New Lead from ${page || 'Website'}`,
     html: `
       <h3>New Lead Received</h3>
@@ -65,7 +66,7 @@ const sendWelcomeEmail = async (leadData) => {
   const mailOptions = {
     from: `"Telkosh Team" <${process.env.SMTP_USER}>`, // Same SMTP user
     to: email, // Lead ka apna email
-    bcc: "Santosh@telkosh.com, bhanu@anantya.ai", // <-- Multiple BCC emails
+    bcc: "Santosh@telkosh.com, marketing@telkosh.com, bhanu@anantya.ai", // <-- Multiple BCC emails
     subject: "Quick Acknowledgment - Telkosh Bulk SMS 🚀", // Subject line
     html: `
       <div style="font-family: Arial, sans-serif; color: #333;">
@@ -73,7 +74,8 @@ const sendWelcomeEmail = async (leadData) => {
         <p>We’re excited to hear from you! 🙌</p>
         <p>Your interest in <strong>Telkosh Bulk SMS</strong> is the first step to smarter, faster business messaging.</p>
         <p>We’ll get back to you shortly.</p>
-        <p><strong>Need urgent help?</strong> Call us anytime at <a href="tel:+917850888280">+91-7850888280</a>.</p>
+         <p><strong>Need urgent help?</strong> Connect us anytime on <a href="https://wa.me/9191729797408" target="_blank">+91-91729797408</a>.</p>
+
         <br/>
         <p>You're in good hands.</p>
         <ul style="list-style: none; padding-left: 0;">
