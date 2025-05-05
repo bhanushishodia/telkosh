@@ -30,7 +30,7 @@ app.post('/api/leads', async (req, res) => {
         // Trigger the WhatsApp message
         await sendWhatsAppMessage(name, phone, 'welcome1', parameters);  // Use the correct template name
  // ✅ Send Welcome SMS to lead
- const smsMessage = `Hi ${name}, thanks for connecting with Telkosh! Our team will contact you soon. For queries, feel free to reply. – Team Telkosh`;
+ const smsMessage = `Hi ${name}, thanks for connecting with Us! Our team will contact you soon. For queries, feel free to reply. –Team Telkosh`;
  await sendSMSMessage(phone, smsMessage);
         res.json({ message: '✅   Both Email and WhatsApp message sent successfully', lead: leadData });
     } catch (error) {
