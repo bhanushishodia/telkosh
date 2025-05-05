@@ -4,8 +4,8 @@ const sendSMSMessage = async (mobileno, msgtext) => {
   console.log("🔑 Sending SMS to:", mobileno);
   console.log("📝 SMS Content:", msgtext);
 
-  const user = '20083935';
-  const pwd = 'neeraj';
+  const user = 'telkoshenq';
+  const pwd = 'u1j_ubsm';
 
   // Set senderid based on country
   let senderid = 'MOALRT'; // Default sender ID
