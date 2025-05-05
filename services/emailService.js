@@ -61,7 +61,7 @@ const sendLeadEmail = async (leadData) => {
   }
 };
 const sendWelcomeEmail = async (leadData) => {
-  const { name, email } = leadData;
+  const { name, email, product } = leadData;
 
   const mailOptions = {
     from: `"Telkosh Team" <${process.env.SMTP_USER}>`, // Same SMTP user
@@ -72,7 +72,7 @@ const sendWelcomeEmail = async (leadData) => {
       <div style="font-family: Arial, sans-serif; color: #333;">
         <h2>Hi ${name || 'there'},</h2>
         <p>We’re excited to hear from you! 🙌</p>
-        <p>Your interest in <strong>Telkosh Bulk SMS</strong> is the first step to smarter, faster business messaging.</p>
+        <p>Your interest in <strong>${product || 'our services'}</strong> is the first step to smarter, faster business messaging.</p>
         <p>We’ll get back to you shortly.</p>
          <p><strong>Need urgent help?</strong> Connect us anytime on <a href="https://wa.me/917297997408" target="_blank">+91-7297997408</a>.</p>
 
