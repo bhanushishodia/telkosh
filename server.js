@@ -48,5 +48,5 @@ app.get("/", (req, res) => {
 // const PORT = process.env.PORT || 10000;
 // app.listen(PORT, () => console.log(`📬 Server running on port ${PORT}`));
 // Start Server
-const PORT = process.env.PORT || 80; // Port 80 set kiya gaya hai
+const PORT = process.env.PORT || 8080; // Port 80 set kiya gaya hai
 app.listen(PORT, () => console.log(`📬 Server running on port ${PORT}`));
