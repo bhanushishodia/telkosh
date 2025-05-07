@@ -11,48 +11,48 @@ const sendSMSMessage = async (mobileno, msgtext) => {
   const user = 'telkoshenq';
   const pwd = 'u1j_ubsm';
 
-  // Set senderid based on country
-  let senderid = 'MOALRT'; // Default sender ID
+  // Determine sender ID based on mobile number prefix
+  let senderid = 'MOALRT'; // Default for India
 
-  if (mobileno.startsWith('+973')) {
-    senderid = 'Mobishtra'; // Bahrain
-  } else if (mobileno.startsWith('+60')) {
-    senderid = 'Mobishtra'; // Malaysia
-  } else if (mobileno.startsWith('+91')) {
-    senderid = 'MOALRT'; // India
+  if (mobileno.startsWith('+973') || mobileno.startsWith('+60')) {
+    senderid = 'Mobishtra'; // Bahrain & Malaysia
   }
 
-  // Always use "All" for CountryCode as per instruction
   const countryCode = 'All';
 
   const url = `http://mshastra.com/sendurl.aspx?user=${encodeURIComponent(user)}&pwd=${encodeURIComponent(pwd)}&senderid=${encodeURIComponent(senderid)}&mobileno=${encodeURIComponent(mobileno)}&msgtext=${encodeURIComponent(msgtext)}&CountryCode=${encodeURIComponent(countryCode)}`;
 
   try {
-    const response = await axios.get(url, { timeout: 10000 }); // Set a timeout of 10 seconds
+    const response = await axios.get(url, { timeout: 10000 });
+
+    if (!response || response.status !== 200) {
+      throw new Error("SMS API did not respond properly");
+    }
+
     console.log("✅ SMS Sent:", response.data);
 
-    // Check for errors in the response
-    if (response.data && response.data.includes('ERROR')) {
+    if (typeof response.data === 'string' && response.data.toLowerCase().includes('error')) {
       console.error("❌ Error in SMS response:", response.data);
-      throw new Error(`Error in SMS API response: ${response.data}`);
+      throw new Error(`SMS API responded with an error: ${response.data}`);
     }
 
     return response.data;
   } catch (error) {
     if (error.response) {
-      // If API responds with error status
-      console.error("❌ Error from API:", error.response.data);
-      throw new Error(`Error from API: ${error.response.data}`);
+      console.error("❌ SMS API Error:", error.response.data);
+      // throw new Error(`SMS API Error: ${error.response.data}`);
     } else if (error.request) {
-      // If no response was received
-      console.error("❌ No response received:", error.request);
-      throw new Error('No response received from SMS API');
+      console.error("❌ No response received from SMS API");
+      // throw new Error('No response received from SMS API');
     } else {
-      // General error
-      console.error("❌ Error sending SMS:", error.message);
-      throw error;
+      console.error("❌ General Error sending SMS:", error.message);
+      // throw error;
     }
+  
+    // Optionally return null or custom safe response
+    return null;
   }
+  
 };
 
 module.exports = { sendSMSMessage };
