@@ -28,6 +28,10 @@ transporter.verify((error, success) => {
 // Send email function
 const sendLeadEmail = async (leadData) => {
   const { name, email, phone, companyName, product, message, page } = leadData;
+  if (!name || !email) {
+    console.error("❌ Missing required lead data: name or email");
+    return;
+  }
   // Check if the lead is from Malaysia Landing Page
   // const recipientEmail = page === "landingpage-malaysia" ? "prasun@telkosh.com" : "harpreet@mobishastra.com";
   const recipientEmail = "poonam@telkosh.com";  // Set this email for all leads
