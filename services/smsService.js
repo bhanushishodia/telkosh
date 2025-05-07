@@ -13,10 +13,14 @@ const sendSMSMessage = async (mobileno, msgtext) => {
 
   // Determine sender ID based on mobile number prefix
   let senderid = 'MOALRT'; // Default for India
-
-  if (mobileno.startsWith('+973') || mobileno.startsWith('+60')) {
-    senderid = 'Mobishtra'; // Bahrain & Malaysia
+  if (
+    mobileno.startsWith('+973') || 
+    mobileno.startsWith('+60') || 
+    mobileno.startsWith('+243')
+  ) {
+    senderid = 'Mobishtra'; // Bahrain, Malaysia & DRC
   }
+  
 
   const countryCode = 'All';
 
