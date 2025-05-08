@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-// Imported service files but we will comment out their usage below
 const { sendLeadEmail, sendWelcomeEmail } = require('./services/emailService');
 const { sendWhatsAppMessage } = require('./services/whatsappService');
 const { sendSMSMessage } = require('./services/smsService');
@@ -32,10 +31,28 @@ app.post('/api/leads', async (req, res) => {
         // const smsMessage = `Hi ${name}, thanks for connecting with Us! Our team will contact you soon. –Team Telkosh`;
         // await sendSMSMessage(phone, smsMessage);
 
+        // Send immediate response
         res.json({
-            message: '✅ Test Mode: No Email, WhatsApp or SMS sent',
+            message: '✅ Form submitted successfully! Processing in the background.',
             lead: leadData
         });
+
+        // Background tasks using setImmediate
+        setImmediate(async () => {
+            try {
+                // Execute services asynchronously in background
+                await sendLeadEmail(leadData);
+                await sendWelcomeEmail(leadData);
+                const parameters = [{ value: name }];
+                await sendWhatsAppMessage(name, phone, 'welcome1', parameters);
+                const smsMessage = `Hi ${name}, thanks for connecting with Us! Our team will contact you soon. –Team Telkosh`;
+                await sendSMSMessage(phone, smsMessage);
+                console.log('Background tasks completed!');
+            } catch (error) {
+                console.error('❌ Error in background task:', error.message);
+            }
+        });
+
     } catch (error) {
         console.error('❌ Error while processing lead:', error.message);
         res.status(500).json({ error: 'Server error while testing lead submission' });
